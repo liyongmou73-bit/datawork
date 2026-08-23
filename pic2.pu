@@ -1,0 +1,63 @@
+@startuml
+class Archive {
+  - 档案ID: int
+  - 档案年份: String
+  - 业务流程(大类): String
+  - 服务项目(中类): String
+  - 档案状态: String
+  - 档案目录号: String
+  - 分册号: String
+  - 起始页: int
+  - 终止页: int
+  - 借阅状态: String
+}
+
+class Material {
+  - 资料名称: String
+  - 资料类型: String
+}
+
+class MaterialCategory {
+  - 分类名称: String
+}
+
+class BusinessType {
+  - 类型名称: String
+}
+
+class ServiceItem {
+  - 项目名称: String
+}
+
+class ArchiveVolume {
+  - 分册编号: String
+}
+
+class BorrowRecord {
+  - 借阅人: String
+  - 借阅时间: Date
+  - 应还时间: Date
+  - 实际归还时间: Date
+  - 借阅状态: String
+}
+
+class DestroyRecord {
+  - 销毁时间: Date
+  - 销毁人: String
+  - 销毁清册: String
+  - 销毁报告: String
+}
+
+' 关联关系及多重性
+Archive "1" -- "*" Material : “包含” (1个档案包含多个资料)
+Archive "*" -- "1" BusinessType : “隶属” (多对一)
+Archive "*" -- "1" ServiceItem : “隶属” (多对一)
+BusinessType "1" -- "*" ServiceItem : “包含” (一对多)
+ArchiveVolume "1" -- "*" Archive : “包含” (1个分册包含多个档案)
+Archive "1" -- "*" BorrowRecord : “关联” (1个档案有多条借阅记录)
+ArchiveVolume "1" -- "*" DestroyRecord : “关联” (1个分册有多条销毁记录)
+Material "*" -- "1" MaterialCategory : “分类” (多对一)
+MaterialCategory "*" -- "1" ServiceItem : “模板” (多对一)
+
+HIDE EMPTY DESCRIPTION
+@enduml

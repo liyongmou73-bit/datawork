@@ -1,0 +1,88 @@
+@startuml
+left to right direction
+actor "档案采集人员" as CA
+actor "档案管理员" as MA
+actor "档案查询人员" as QA
+actor "系统管理员" as SA
+
+rectangle "档案管理系统" {
+  ' 档案采集人员用例
+  usecase "标记纸质档案资料" as UC1
+  usecase "扫描纸质档案资料" as UC2
+  usecase "打印或重复打印档案传递清单" as UC3
+  usecase "提醒提交传递清单" as UC4
+
+  ' 档案管理员顶层用例
+  usecase "档案归档" as UC5
+  usecase "档案借阅" as UC6
+  usecase "档案销毁" as UC7
+  usecase "档案查询" as UC8
+
+  ' 档案归档子用例 (Include)
+  usecase "修改归档档案错误" as UC5_1
+  usecase "生成档案目录和封面" as UC5_2
+  usecase "确认归档" as UC5_3
+
+  ' 档案借阅子用例 (Include)
+  usecase "查询指定档案是否可借阅" as UC6_1
+  usecase "打印借阅申请表单" as UC6_2
+  usecase "录入借阅信息" as UC6_3
+  usecase "查询借阅记录" as UC6_4
+  usecase "完成借阅并记录" as UC6_5
+  usecase "超期提醒" as UC6_6
+
+  ' 档案销毁子用例 (Include)
+  usecase "生成销毁清册和报告表" as UC7_1
+  usecase "生成销毁记录" as UC7_2
+  usecase "确认销毁" as UC7_3
+
+  ' 系统管理员专用用例
+  usecase "系统菜单维护" as UC9
+  usecase "用户维护" as UC10
+  usecase "角色维护" as UC11
+  usecase "代码表维护" as UC12
+  usecase "作废处理" as UC13
+
+  ' 公共用例
+  usecase "查询档案信息" as UC14
+
+  ' 角色与用例关联
+  CA --> UC1
+  CA --> UC2
+  CA --> UC3
+  CA --> UC4
+
+  MA --> UC5
+  MA --> UC6
+  MA --> UC7
+  MA --> UC8
+
+  QA --> UC8
+
+  SA --> UC9
+  SA --> UC10
+  SA --> UC11
+  SA --> UC12
+  SA --> UC13
+  SA --> UC8
+
+  ' 包含关系说明
+  UC5 --> UC5_1 : <<include>>
+  UC5 --> UC5_2 : <<include>>
+  UC5 --> UC5_3 : <<include>>
+
+  UC6 --> UC6_1 : <<include>>
+  UC6 --> UC6_2 : <<include>>
+  UC6 --> UC6_3 : <<include>>
+  UC6 --> UC6_4 : <<include>>
+  UC6 --> UC6_5 : <<include>>
+  UC6 --> UC6_6 : <<include>>
+
+  UC7 --> UC7_1 : <<include>>
+  UC7 --> UC7_2 : <<include>>
+  UC7 --> UC7_3 : <<include>>
+
+  ' 公共查询用例的包含关系
+  UC8 --> UC14 : <<include>>
+}
+@enduml
